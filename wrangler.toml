@@ -1,0 +1,21 @@
+name = "vcrypto-shop-backend"
+main = "build/worker/shim.mjs"
+compatibility_date = "2023-12-01"
+
+[build]
+command = "cargo install -q worker-build && worker-build --release"
+
+[env.dev]
+build = { command = "cargo install -q worker-build && worker-build --dev" }
+
+[env.dev.vars]
+DISCORD_PUBLIC_KEY = "9f77a9488f81d243ae6d010789db870eab60f8f641f43348ceb1d6bbb751fd64"
+
+[env.dev.durable_objects]
+bindings = [
+  { name = "COMPANY", class_name = "Company" }, # the `class_name` uses the Rust struct identifier name
+]
+
+[[migrations]]
+tag = "v1"
+new_classes = ["Company"]
